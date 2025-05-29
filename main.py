@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 class AppTkinter:
     def __init__(self, root):
         self.root = root
-        self.root.title("Lorem Ipsum")
+        self.root.title("Welcome Page")
         self.root.geometry("1280x720")
         self.root.resizeable(False, False)
         
