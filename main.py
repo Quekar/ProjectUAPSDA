@@ -25,6 +25,24 @@ class AppTkinter:
         
         self.frame_utama = tk.Frame(root)
 
+    def anggota(self):
+        self.frame_awal.place_forget()
+        self.tampilkananggota()
+    
+    def perkenalan(self):
+        self.frame_awal.place_forget()
+        self.tampilperkenalan()
+    
+    def tampilperkenalan(self):
+        self.frame_perkenalan = tk.Frame(self.root, highlightbackground="blue", highlightthickness=3)
+        self.frame_perkenalan.place(relx=0.5, rely=0.5, anchor="center")
+
+        # Placeholder, plis ganti nanti
+        teks = (
+            "Ini adalah project akhir Struktur Data Algoritma yang menggunakan Tkinter \n"
+            "ato semacamnya.(ini hanya placeholder)"
+        )
+
     def background(self):
         img = Image.open("bg.png") # placeholder, bisa diganti
         img = img.resize((1280, 720))
