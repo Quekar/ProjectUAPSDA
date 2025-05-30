@@ -43,6 +43,44 @@ class AppTkinter:
             "ato semacamnya.(ini hanya placeholder)"
         )
 
+        def tampilkananggota(self):
+        self.fkiri_anggota = tk.Frame(self.root, width=320, height=720, bg="white")
+        self.fkiri_anggota.pack_propagate(False)  # Mencegah resize otomatis
+        self.fkiri_anggota.pack(side="left", fill="y")
+
+        self.fkanan_anggota = tk.Frame(self.root, width=960, height=720, bg="white")
+        self.fkanan_anggota.pack_propagate(False)
+        self.fkanan_anggota.pack(side="right", fill="both", expand=True)
+
+        label_judul = tk.Label(self.fkiri_anggota, text="Anggota Kami", font=("Helvetica", 30, "bold"), bg="white", anchor="w")
+        label_judul.pack(padx=10, pady=(10, 20), anchor="w")
+
+        data_anggota = [
+            {"nama": "Nama : Andhika Akbar Pratama", "npm": "NPM  : 2417051056", "bg": "#ff69b4"},
+            {"nama": "Nama : M. Diaz Al Hafidz", "npm": "NPM  : 2417051071", "bg": "#cebea5"},
+            {"nama": "Nama : Karina Aini", "npm": "NPM  : 2417051063", "bg": "#fff5e6"},
+            {"nama": "Nama : Ardhia Salwa Indriani", "npm": "NPM  : 2457051004", "bg": "#fdfbd4"},
+        ]
+
+        for anggota in data_anggota:
+            petak = tk.Frame(self.fkanan_anggota, bg=anggota["bg"], bd=1, relief="solid")
+            petak.pack(fill="x", padx=10, pady=5)
+
+            label_nama = tk.Label(petak, text=anggota["nama"], font=("Helvetica", 20), bg=anggota["bg"], anchor="w")
+            label_nama.pack(fill="x", padx=5, pady=(5, 0))
+
+            label_npm = tk.Label(petak, text=anggota["npm"], font=("Helvetica", 20), bg=anggota["bg"], anchor="w")
+            label_npm.pack(fill="x", padx=5, pady=(0, 5))
+
+        
+        self.btn_back_anggota = tk.Button(self.fkanan_anggota, text="Kembali", font=("Helvetica", 18), command=self.kembali_anggota, bg="red", fg="white")
+        self.btn_back_anggota.pack(side="bottom", pady=20, padx=20, fill="x")
+
+    def kembali_anggota(self):
+        self.fkiri_anggota.pack_forget()
+        self.fkanan_anggota.pack_forget()
+        self.frame_awal.place(relx=0.5, rely=0.5, anchor="center")
+
     def background(self):
         img = Image.open("bg.png") # placeholder, bisa diganti
         img = img.resize((1280, 720))
