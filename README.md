@@ -1,6 +1,6 @@
 # Project UAP SDA
-## Membuat Aplikasi Menggunakan Python
-### Lorem Ipsum
+## Python
+### Membuat Aplikasi Menggunakan Tkinter
 Ceritanya penjelasan projek
 ## Nama Anggota
 Andhika Akbar Pratama (2417051056)
