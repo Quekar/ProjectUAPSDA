@@ -14,13 +14,13 @@ class AppTkinter:
         self.frame_awal = tk.Frame(self.root, highlightbackground="red" ,highlightcolor="red", bd=0, highlightthickness=5)
         self.frame_awal.place(relx=0.5, rely=0.5, anchor="center")
         
-        self.btn_messagebox = tk.Button(self.frame_awal, text="Masuk", font=("Helvetica", 14) command=self.pesan1)
+        self.btn_messagebox = tk.Button(self.frame_awal, text="Masuk", font=("Helvetica", 14), command=self.pesan1)
         self.btn_messagebox.pack(pady=10)
 
-        self.btn_masuk = tk.Button(self.frame_awal, text="Anggota", font=("Helvetica", 14) )
+        self.btn_masuk = tk.Button(self.frame_awal, text="Anggota", font=("Helvetica", 14), command=self.anggota)
         self.btn_masuk.pack(pady=10)
         
-        self.btn_masuk = tk.Button(self.frame_awal, text="Perkenalan", font=("Helvetica", 14) )
+        self.btn_masuk = tk.Button(self.frame_awal, text="Perkenalan", font=("Helvetica", 14), command=self.perkenalan)
         self.btn_masuk.pack(pady=10)
         
         self.frame_utama = tk.Frame(root)
@@ -56,7 +56,7 @@ class AppTkinter:
         self.btn_back_perkenalan.pack(side="bottom", pady=20)
 
 
-        def tampilkananggota(self):
+    def tampilkananggota(self):
         self.fkiri_anggota = tk.Frame(self.root, width=320, height=720, bg="white")
         self.fkiri_anggota.pack_propagate(False)  # Mencegah resize otomatis
         self.fkiri_anggota.pack(side="left", fill="y")
