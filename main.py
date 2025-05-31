@@ -42,6 +42,19 @@ class AppTkinter:
             "Ini adalah project akhir Struktur Data Algoritma yang menggunakan Tkinter \n"
             "ato semacamnya.(ini hanya placeholder)"
         )
+        
+         label_perkenalan = tk.Label(
+            self.frame_perkenalan,
+            text=teks,
+            font=("Helvetica", 14),
+            bg="white",
+            justify="center",
+            anchor="n"
+        )
+        label_perkenalan.pack(padx=30, pady=30)
+        self.btn_back_perkenalan = tk.Button(self.frame_perkenalan, text="Kembali", font=("Helvetica", 14), command=self.kembali_perkenalan)
+        self.btn_back_perkenalan.pack(side="bottom", pady=20)
+
 
         def tampilkananggota(self):
         self.fkiri_anggota = tk.Frame(self.root, width=320, height=720, bg="white")
@@ -80,6 +93,11 @@ class AppTkinter:
         self.fkiri_anggota.pack_forget()
         self.fkanan_anggota.pack_forget()
         self.frame_awal.place(relx=0.5, rely=0.5, anchor="center")
+
+    def kembali_perkenalan(self):
+        self.frame_perkenalan.place_forget()
+        self.frame_awal.place(relx=0.5, rely=0.5, anchor="center")
+
 
     def background(self):
         img = Image.open("bg.png") # placeholder, bisa diganti
