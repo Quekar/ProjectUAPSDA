@@ -10,7 +10,6 @@ class AppTkinter:
         self.root.resizable(False, False)
 
         self.background()
-        # klo ada yg mau / niat ganti ke canvas silahkan, gwehj malas
         self.frame_awal = tk.Frame(self.root, highlightbackground="red" ,highlightcolor="red", bd=0, highlightthickness=5)
         self.frame_awal.place(relx=0.5, rely=0.5, anchor="center")
         
