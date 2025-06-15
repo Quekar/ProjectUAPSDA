@@ -5,7 +5,7 @@ import csv
 import os
 
 class MatchData:
-    def _init_(self, division, ao_name, aka_name, ao_score, aka_score, ao_status, aka_status, time_elapsed):
+    def __init__(self, division, ao_name, aka_name, ao_score, aka_score, ao_status, aka_status, time_elapsed):
         self.division = division
         self.ao_name = ao_name
         self.aka_name = aka_name
@@ -16,7 +16,7 @@ class MatchData:
         self.time_elapsed = time_elapsed
 
 class CSVLogger:
-    def _init_(self, filename='karate_scores.csv'):
+    def __init__(self, filename='karate_scores.csv'):
         self.filename = filename
         self._initialize_file()
     def _initialize_file(self):
@@ -40,7 +40,7 @@ class CSVLogger:
             ])
 
 class ScoreManager:
-    def _init_(self):
+    def __init__(self):
         self.ao_score = 0
         self.aka_score = 0
         self.ao_status = "Normal"
@@ -52,7 +52,7 @@ class ScoreManager:
             self.aka_score = max(0, self.aka_score + delta)
 
 class KarateApp:
-    def _init_(self, root, back_callback=None):
+    def __init__(self, root, back_callback=None):
         self.root = root
         self.back_callback = back_callback
         self.root.title("Karate Scoring App")
