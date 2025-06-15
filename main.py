@@ -127,3 +127,111 @@ class KarateApp:
             if penalty_type in ["Shikkaku", "Kikken"]:
                 self.score_manager.ao_score = 8
                 self.ao_score_var.set(8)
+
+def create_frames(self):
+        self.frame_atas = tk.Frame(self.root, height=80, width=1280, bg='lightgray')
+        self.frame_atas.place(x=0, y=0)
+
+        self.frame_kiri = tk.Frame(self.root, height=560, width=640, bg='blue')
+        self.frame_kiri.place(x=0, y=80)
+
+        self.frame_kanan = tk.Frame(self.root, height=560, width=640, bg='red')
+        self.frame_kanan.place(x=640, y=80)
+
+        self.frame_bawah = tk.Frame(self.root, height=80, width=1280, bg='white')
+        self.frame_bawah.place(x=0, y=640)
+
+    def create_top_frame(self):
+        self.ao_name_var = tk.StringVar()
+        self.ao_name_entry = tk.Entry(self.frame_atas, textvariable=self.ao_name_var, width=20)
+        self.ao_name_entry.place(x=50, y=30)
+
+        self.division_var = tk.StringVar()
+        self.division_combo = ttk.Combobox(self.frame_atas, textvariable=self.division_var, state='readonly')
+        self.division_combo['values'] = ['Perebutan Gelar', 'Lomba Non Gelar']
+        self.division_combo.current(0)
+        self.division_combo.place(x=500, y=25)
+        tk.Label(self.frame_atas, text="Division:", bg='lightgray').place(x=440, y=25)
+
+        tk.Label(self.frame_atas, text="[5] Judges", bg='lightgray', font=("Arial", 10)).place(x=500, y=50)
+
+        self.aka_name_var = tk.StringVar()
+        self.aka_name_entry = tk.Entry(self.frame_atas, textvariable=self.aka_name_var, width=20)
+        self.aka_name_entry.place(x=900, y=30)
+        self.ao_name_entry.bind("<Return>", self.lock_ao_name)
+        self.aka_name_entry.bind("<Return>", self.lock_aka_name)
+        self.division_combo.bind("<<ComboboxSelected>>", self.lock_division)
+        
+        self.close_btn = tk.Button(self.frame_atas, text="Kembali", bg='red', fg='white', command=self.kembali_main)
+        self.close_btn.place(x=1180, y=10, width=90, height=30)
+
+    def lock_ao_name(self, event=None):
+        if not self.ao_locked:
+            name = self.ao_name_var.get().strip()
+            if name:
+                self.ao_locked = True
+                self.ao_name_entry.destroy()
+                tk.Label(self.frame_atas, text=name, bg='lightgray', font=("Arial", 12)).place(x=50, y=30)
+                self.try_log_names()
+
+    def lock_aka_name(self, event=None):
+        if not self.aka_locked:
+            name = self.aka_name_var.get().strip()
+            if name:
+                self.aka_locked = True
+                self.aka_name_entry.destroy()
+                tk.Label(self.frame_atas, text=name, bg='lightgray', font=("Arial", 12)).place(x=900, y=30)
+                self.try_log_names()
+
+    def lock_division(self, event=None):
+        if not self.division_locked:
+            division = self.division_var.get().strip()
+            if division:
+                self.division_locked = True
+                self.division_combo.config(state="disabled")
+                self.try_log_names()
+   
+    def try_log_names(self):
+        if self.ao_locked and self.aka_locked and self.division_locked:
+            match_data = MatchData(
+                division=self.division_var.get(),
+                ao_name=self.ao_name_var.get(),
+                aka_name=self.aka_name_var.get(),
+                ao_score=0,
+                aka_score=0,
+                ao_status="Normal",
+                aka_status="Normal",
+                time_elapsed="00:00"
+            )
+            CSVLogger().log_match(match_data)
+
+    def create_left_frame(self):
+        self.flag_box_ao = tk.Frame(self.frame_kiri, width=180, height=120, bg='white', bd=2, relief='ridge')
+        self.flag_box_ao.place(x=230, y=20)
+
+        self.blue_flag_img = Image.open("blue.png").resize((180, 120)) #bendera biru placeholder
+        self.white_flag_img = Image.open("white.png").resize((180, 120)) #bendera putih placeholder
+        self.blue_flag = ImageTk.PhotoImage(self.blue_flag_img)
+        self.white_flag = ImageTk.PhotoImage(self.white_flag_img)
+
+        self.flag_label_ao = tk.Label(self.flag_box_ao, image=self.blue_flag, bg='white')
+        self.flag_label_ao.pack()
+
+        self.ao_score_var = tk.IntVar(value=0)
+        self.ao_score_label = tk.Label(self.frame_kiri, textvariable=self.ao_score_var, font=("Arial", 48, "bold"), fg='white', bg='blue')
+        self.ao_score_label.place(x=270, y=160)
+
+        self.ao_plus_btn = tk.Button(self.frame_kiri, text="+1", width=6, height=2, font=("Arial", 14), command=lambda: self.update_score("Ao", 1))
+        self.ao_plus_btn.place(x=180, y=240)
+
+        self.ao_minus_btn = tk.Button(self.frame_kiri, text="-1", width=6, height=2, font=("Arial", 14), command=lambda: self.update_score("Ao", -1))
+        self.ao_minus_btn.place(x=360, y=240)
+
+        self.stopwatch_label_ao = tk.Label(self.frame_kiri, text="00:00", font=("Arial", 32, "bold"), fg='white', bg='blue')
+        self.stopwatch_label_ao.place(x=250, y=320)
+
+        self.shikkaku_ao_btn = tk.Button(self.frame_kiri, text="Shikkaku", font=("Arial", 12, "bold"), width=10, bg='black', fg='white', command=lambda: self.apply_penalty("Ao", "Shikkaku"))
+        self.shikkaku_ao_btn.place(x=180, y=400)
+
+        self.kikken_ao_btn = tk.Button(self.frame_kiri, text="Kikken", font=("Arial", 12, "bold"), width=10, bg='gray', fg='white', command=lambda: self.apply_penalty("Ao", "Kikken"))
+        self.kikken_ao_btn.place(x=360, y=400)
