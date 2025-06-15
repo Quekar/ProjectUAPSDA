@@ -21,11 +21,11 @@ class AppTkinter:
         self.btn_anggota = tk.Button(self.root, text="Anggota", font=("Helvetica", 14), width=20, height=2, command=self.tampilkan_anggota)
         self.btn_anggota.place(relx=0.5, rely=0.55, anchor="center")
 
-        self.btn_menu = tk.Button(self.root, text="Menu", font=("Helvetica", 14), width=20, height=2, command=self.tampilkan_Menu)
+        self.btn_menu = tk.Button(self.root, text="Keluar", font=("Helvetica", 14), width=20, height=2, command=self.keluar_aplikasi)
         self.btn_menu.place(relx=0.5, rely=0.65, anchor="center")
 
     def background(self):
-        img = Image.open("tkinter 2.png")  # Ganti sesuai kebutuhan
+        img = Image.open("tkinter 2.png")  
         img = img.resize((1280, 720))
         self.bg_image = ImageTk.PhotoImage(img)
         self.bg_label = tk.Label(self.root, image=self.bg_image)
@@ -74,33 +74,8 @@ class AppTkinter:
         self.fkanan_anggota.place_forget()
         self.frame_awal.place(relx=0.5, rely=0.5, anchor="center")
 
-    def Menu(self):
-        self.frame_awal.place_forget()
-        self.root.attributes("-fullscreen", True)
-        self.tampilkan_Menu()
-
-    def tampilkan_Menu(self):
-        self.frame_Menu = tk.Frame(self.root, bg="white")
-        self.frame_Menu.place(x=0, y=0, relwidth=1, relheight=1)
-
-        kotak_tengah = tk.Frame(self.frame_Menu, bg="white")
-        kotak_tengah.place(relx=0.5, rely=0.5, anchor="center")
-
-        teks = (
-            "Ini adalah project akhir Struktur Data Algoritma yang menggunakan Tkinter \n"
-            "ato semacamnya. (ini hanya placeholder)"
-        )
-
-        label_Menu = tk.Label(self.frame_Menu, text=teks, font=("Helvetica", 14), bg="white", justify="center", anchor="n")
-        label_Menu.pack(padx=30, pady=30)
-
-        self.btn_back_Menu = tk.Button(kotak_tengah, text="Kembali", font=("Helvetica", 14), command=self.kembali_Menu)
-        self.btn_back_Menu.pack(pady=(50, 10))
-
-    def kembali_Menu(self):
-        self.frame_Menu.place_forget()
-        self.frame_awal.place(relx=0.5, rely=0.5, anchor="center")
-
+    def keluar_aplikasi(self):
+        self.root.destroy()
 
 if __name__ == "__main__":
     root = tk.Tk()
