@@ -235,3 +235,118 @@ def create_frames(self):
 
         self.kikken_ao_btn = tk.Button(self.frame_kiri, text="Kikken", font=("Arial", 12, "bold"), width=10, bg='gray', fg='white', command=lambda: self.apply_penalty("Ao", "Kikken"))
         self.kikken_ao_btn.place(x=360, y=400)
+
+def create_right_frame(self):
+        self.flag_box_aka = tk.Frame(self.frame_kanan, width=180, height=120, bg='white', bd=2, relief='ridge')
+        self.flag_box_aka.place(x=230, y=20)
+
+
+        self.red_flag_img = Image.open("red.png").resize((180, 120)) #bendera merah placeholder
+        self.white_flag_img = Image.open("white.png").resize((180, 120)) #bendera putih placeholder
+        self.red_flag = ImageTk.PhotoImage(self.red_flag_img)
+        self.white_flag = ImageTk.PhotoImage(self.white_flag_img)
+
+        self.flag_label_aka = tk.Label(self.flag_box_aka, image=self.red_flag, bg='white')
+        self.flag_label_aka.pack()
+
+        self.aka_score_var = tk.IntVar(value=0)
+        self.aka_score_label = tk.Label(self.frame_kanan, textvariable=self.aka_score_var, font=("Arial", 48, "bold"), fg='white', bg='red')
+        self.aka_score_label.place(x=270, y=160)
+
+        self.aka_plus_btn = tk.Button(self.frame_kanan, text="+1", width=6, height=2, font=("Arial", 14), command=lambda: self.update_score("Aka", 1))
+        self.aka_plus_btn.place(x=180, y=240)
+
+        self.aka_minus_btn = tk.Button(self.frame_kanan, text="-1", width=6, height=2, font=("Arial", 14), command=lambda: self.update_score("Aka", -1))
+        self.aka_minus_btn.place(x=340, y=240)
+
+        self.stopwatch_label_aka = tk.Label(self.frame_kanan, text="00:00", font=("Arial", 32, "bold"), fg='white', bg='red')
+        self.stopwatch_label_aka.place(x=250, y=320)
+
+        self.shikkaku_aka_btn = tk.Button(self.frame_kanan, text="Shikkaku", font=("Arial", 12, "bold"), width=10, bg='black', fg='white', command=lambda: self.apply_penalty("Aka", "Shikkaku"))
+        self.shikkaku_aka_btn.place(x=180, y=400)
+
+        self.kikken_aka_btn = tk.Button(self.frame_kanan, text="Kikken", font=("Arial", 12, "bold"), width=10, bg='gray', fg='white', command=lambda: self.apply_penalty("Aka", "Kikken"))
+        self.kikken_aka_btn.place(x=360, y=400)
+
+
+    def update_score(self, team, delta):
+        self.score_manager.update_score(team, delta)
+        if team == "Ao":
+            self.ao_score_var.set(self.score_manager.ao_score)
+        elif team == "Aka":
+            self.aka_score_var.set(self.score_manager.aka_score)
+
+    def create_bottom_frame(self):
+        self.stopwatch_btn = tk.Button(self.frame_bawah, text="Start", command=self.toggle_stopwatch)
+        self.stopwatch_btn.place(x=100, y=25)
+
+        self.done_btn = tk.Button(self.frame_bawah, text="Done", bg='lightgreen', command=self.done_match)
+        self.done_btn.place(x=550, y=25)
+        
+        self.reset_btn = tk.Button(self.frame_bawah, text="Reset", bg='tomato', command=self.reset_app)
+        self.reset_btn.place(x=1000, y=25)
+        self.toggle_stopwatch_btn = tk.Button(self.frame_bawah, text="Hide Stopwatch", command=self.toggle_stopwatch_display)
+        self.toggle_stopwatch_btn.place(x=250, y=25)
+
+    
+    def done_match(self):
+        if not self.ao_locked or not self.aka_locked or not self.division_locked:
+            messagebox.showwarning("Data Belum Lengkap", "Silakan isi nama Ao, Aka, dan pilih divisi terlebih dahulu.")
+            return
+
+        if self.stopwatch_running:
+            self.stopwatch_running = False
+            if self.stopwatch_job:
+                self.root.after_cancel(self.stopwatch_job)
+            self.stopwatch_btn.config(text="Start")
+
+        match_data = MatchData(
+            division=self.division_var.get(),
+            ao_name=self.ao_name_var.get(),
+            aka_name=self.aka_name_var.get(),
+            ao_score=self.score_manager.ao_score,
+            aka_score=self.score_manager.aka_score,
+            ao_status=self.score_manager.ao_status,
+            aka_status=self.score_manager.aka_status,
+            time_elapsed=self.format_time(self.stopwatch_seconds)
+        )
+        CSVLogger().log_match(match_data)
+
+        for btn in [self.ao_plus_btn, self.ao_minus_btn, self.aka_plus_btn, self.aka_minus_btn,
+                    self.shikkaku_ao_btn, self.kikken_ao_btn,
+                    self.shikkaku_aka_btn, self.kikken_aka_btn]:
+            btn.config(state="disabled")
+
+        self.stopwatch_btn.config(state="disabled")
+        self.done_btn.config(state="disabled")
+        self.reset_btn.config(state="normal")
+
+    def reset_app(self):
+        self.ao_locked = False
+        self.aka_locked = False
+        self.division_locked = False
+
+        for widget in self.frame_atas.winfo_children():
+            if isinstance(widget, tk.Label) and widget.cget("text") == self.ao_name_var.get():
+                widget.destroy()
+        self.ao_name_var.set("")
+        self.ao_name_entry = tk.Entry(self.frame_atas, textvariable=self.ao_name_var, width=20)
+        self.ao_name_entry.place(x=50, y=30)
+        self.ao_name_entry.bind("<Return>", self.lock_ao_name)
+
+        for widget in self.frame_atas.winfo_children():
+            if isinstance(widget, tk.Label) and widget.cget("text") == self.aka_name_var.get():
+                widget.destroy()
+        self.aka_name_var.set("")
+        self.aka_name_entry = tk.Entry(self.frame_atas, textvariable=self.aka_name_var, width=20)
+        self.aka_name_entry.place(x=900, y=30)
+        self.aka_name_entry.bind("<Return>", self.lock_aka_name)
+
+        self.division_combo.config(state="readonly")
+        self.division_var.set("Perebutan Gelar")
+
+        self.score_manager = ScoreManager()
+
+        self.blue_flag_img = Image.open("blue.png").resize((180, 100)) #bendera biru placeholder
+        self.blue_flag = ImageTk.PhotoImage(self.blue_flag_img)
+        self.flag_label_ao.config(image=self.blue_flag)
