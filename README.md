@@ -1,7 +1,7 @@
 # Project UAP SDA
 ## Membuat Aplikasi Menggunakan Tkinter dalam Python
 ### Penjelasan
-Projek ini dibuat untuk memenuhi tugas akhir semester 2 pada mata kuliah SDA Responsi. Pada projek ini kami membuat program BACKEND dan FRONTEND mennggunakan Tkinter. Pada Frontend terdapat tombol yang interaktif, ada Masuk, Anggota, dan Keluar. 
+Projek ini dibuat untuk memenuhi tugas akhir semester 2 pada mata kuliah SDA Responsi. Pada projek ini kami membuat program BACKEND dan FRONTEND menggunakan Tkinter. Pada Frontend terdapat tombol yang interaktif, ada Masuk, Anggota, dan Keluar. 
 Ketika kita menekan tombol masuk maka akan menampilkan backend yang berisi tentang scoreboard Karate. Pada bagian scoreboard tersebut terdapat tombol shikaku dan kikken, yang artinya menyerah dan diskualifikasi. Pada bagian anggota
 akan menampilkan nama dan npm masing masing anggota, yang terakhir bagian keluar, akan mengembalikan ke terminal.
 ## Nama Anggota
