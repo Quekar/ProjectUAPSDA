@@ -350,3 +350,122 @@ def create_right_frame(self):
         self.blue_flag_img = Image.open("blue.png").resize((180, 100)) #bendera biru placeholder
         self.blue_flag = ImageTk.PhotoImage(self.blue_flag_img)
         self.flag_label_ao.config(image=self.blue_flag)
+
+self.red_flag_img = Image.open("red.png").resize((180, 100)) #bendera biru placeholder
+        self.red_flag = ImageTk.PhotoImage(self.red_flag_img)
+        self.flag_label_aka.config(image=self.red_flag)
+
+        self.flag_label_ao.config(image=self.blue_flag)
+        self.flag_label_aka.config(image=self.red_flag)
+
+        self.ao_score_var.set(0)
+        self.aka_score_var.set(0)
+        self.score_manager = ScoreManager()
+
+        self.score_manager = ScoreManager()
+
+        self.ao_score_var.set(0)
+        self.aka_score_var.set(0)
+
+        self.flag_label_ao.config(image=self.blue_flag)
+        self.flag_label_aka.config(image=self.red_flag)
+
+        if self.stopwatch_job:
+            self.root.after_cancel(self.stopwatch_job)
+        self.stopwatch_running = False
+        self.stopwatch_seconds = 0
+        self.stopwatch_label_ao.config(text="00:00")
+        self.stopwatch_label_aka.config(text="00:00")
+        self.stopwatch_btn.config(state="normal", text="Start")
+
+        for btn in [self.ao_plus_btn, self.ao_minus_btn, self.aka_plus_btn, self.aka_minus_btn,
+                    self.shikkaku_ao_btn, self.kikken_ao_btn,
+                    self.shikkaku_aka_btn, self.kikken_aka_btn]:
+            btn.config(state="normal")
+        self.done_btn.config(state="normal")
+    
+    def kembali_main(self):
+        self.frame_atas.place_forget()
+        self.frame_kanan.place_forget()
+        self.frame_kiri.place_forget()
+        self.frame_bawah.place_forget()
+        if self.back_callback:
+            self.back_callback()
+class AppTkinter:
+    def init(self, root):
+        self.root = root
+        self.root.title("Kelompok 3")
+        self.root.geometry("1280x720")
+
+        self.root.resizable(False, False)
+
+        self.background()
+        self.frame_awal = tk.Frame(self.root, bg="", highlightthickness=0, bd=0)
+
+        self.btn_masuk = tk.Button(self.root, text="Masuk", font=("Helvetica", 14), width=20, height=2, command=self.buka_karate)
+        self.btn_masuk.place(relx=0.5, rely=0.45, anchor="center")
+
+        self.btn_anggota = tk.Button(self.root, text="Anggota", font=("Helvetica", 14), width=20, height=2, command=self.tampilkan_anggota)
+        self.btn_anggota.place(relx=0.5, rely=0.55, anchor="center")
+
+        self.btn_menu = tk.Button(self.root, text="Keluar", font=("Helvetica", 14), width=20, height=2, command=self.keluar_aplikasi)
+        self.btn_menu.place(relx=0.5, rely=0.65, anchor="center")
+
+    def background(self):
+        img = Image.open("bg.png") #background placeholder
+        img = img.resize((1280, 720))
+        self.bg_image = ImageTk.PhotoImage(img)
+        self.bg_label = tk.Label(self.root, image=self.bg_image)
+        self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+    
+    def buka_karate(self):
+        self.frame_awal.place_forget()
+        KarateApp(self.root, back_callback=self.tampilkan_menu)
+    def tampilkan_menu(self):
+        self.frame_awal.place(relx=0.5, rely=0.5, anchor="center")
+
+    
+    def tampilkan_anggota(self):
+        self.frame_awal.place_forget()
+        self.fkanan_anggota = tk.Frame(self.root, bg="white")
+        self.fkanan_anggota.place(x=0, y=0, width=1280, height=720)
+
+        label_judul = tk.Label(self.fkanan_anggota, text="Anggota Kami", font=("Helvetica", 28, "bold"), bg="white")
+        label_judul.pack(pady=(30, 20))
+
+        data_anggota = [
+            {"nama": "Nama : Andhika Akbar Pratama", "npm": "NPM  : 2417051056", "bg": "#ff69b4"},
+            {"nama": "Nama : M. Diaz Al Hafidz", "npm": "NPM  : 2417051071", "bg": "#cebea5"},
+            {"nama": "Nama : Karina Aini", "npm": "NPM  : 2417051063", "bg": "#fff5e6"},
+            {"nama": "Nama : Ardhia Salwa Indriani", "npm": "NPM  : 2457051004", "bg": "#fdfbd4"},
+        ]
+
+
+        for anggota in data_anggota:
+            petak = tk.Frame(self.fkanan_anggota, bg=anggota["bg"], bd=1, relief="solid")
+            petak.pack(padx="100", pady=5, fill="x")
+
+            label_nama = tk.Label(petak, text=anggota["nama"], font=("Helvetica", 16, "bold"), bg=anggota["bg"], anchor="w")
+            label_nama.pack(fill="x", padx=20, pady=(15, 5))
+
+            label_npm = tk.Label(petak, text=anggota["npm"], font=("Helvetica", 16), bg=anggota["bg"], anchor="w")
+            label_npm.pack(fill="x", padx=20, pady=(0, 5))
+
+        self.btn_back_anggota = tk.Button(
+            self.fkanan_anggota, text="Kembali", font=("Helvetica", 14),
+            command=self.kembali_anggota, bg="red", fg="white", width=15
+        )
+        self.btn_back_anggota.pack(pady=(30, 30))
+ 
+
+    def kembali_anggota(self):
+        self.fkanan_anggota.place_forget()
+        self.frame_awal.place(relx=0.5, rely=0.5, anchor="center")
+
+    def keluar_aplikasi(self):
+        self.root.destroy()
+
+if name == "main":
+    root = tk.Tk()
+    app = AppTkinter(root)
+    root.mainloop()
