@@ -129,17 +129,17 @@ class KarateApp:
                 self.ao_score_var.set(8)
 
     def create_frames(self):
-            self.frame_atas = tk.Frame(self.root, height=80, width=1280, bg='lightgray')
-            self.frame_atas.place(x=0, y=0)
+        self.frame_atas = tk.Frame(self.root, height=80, width=1280, bg='lightgray')
+        self.frame_atas.place(x=0, y=0)
     
-            self.frame_kiri = tk.Frame(self.root, height=560, width=640, bg='blue')
-            self.frame_kiri.place(x=0, y=80)
+        self.frame_kiri = tk.Frame(self.root, height=560, width=640, bg='blue')
+        self.frame_kiri.place(x=0, y=80)
     
-            self.frame_kanan = tk.Frame(self.root, height=560, width=640, bg='red')
-            self.frame_kanan.place(x=640, y=80)
+        self.frame_kanan = tk.Frame(self.root, height=560, width=640, bg='red')
+        self.frame_kanan.place(x=640, y=80)
     
-            self.frame_bawah = tk.Frame(self.root, height=80, width=1280, bg='white')
-            self.frame_bawah.place(x=0, y=640)
+        self.frame_bawah = tk.Frame(self.root, height=80, width=1280, bg='white')
+        self.frame_bawah.place(x=0, y=640)
 
     def create_top_frame(self):
         self.ao_name_var = tk.StringVar()
