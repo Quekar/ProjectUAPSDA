@@ -128,18 +128,18 @@ class KarateApp:
                 self.score_manager.ao_score = 8
                 self.ao_score_var.set(8)
 
-def create_frames(self):
-        self.frame_atas = tk.Frame(self.root, height=80, width=1280, bg='lightgray')
-        self.frame_atas.place(x=0, y=0)
-
-        self.frame_kiri = tk.Frame(self.root, height=560, width=640, bg='blue')
-        self.frame_kiri.place(x=0, y=80)
-
-        self.frame_kanan = tk.Frame(self.root, height=560, width=640, bg='red')
-        self.frame_kanan.place(x=640, y=80)
-
-        self.frame_bawah = tk.Frame(self.root, height=80, width=1280, bg='white')
-        self.frame_bawah.place(x=0, y=640)
+    def create_frames(self):
+            self.frame_atas = tk.Frame(self.root, height=80, width=1280, bg='lightgray')
+            self.frame_atas.place(x=0, y=0)
+    
+            self.frame_kiri = tk.Frame(self.root, height=560, width=640, bg='blue')
+            self.frame_kiri.place(x=0, y=80)
+    
+            self.frame_kanan = tk.Frame(self.root, height=560, width=640, bg='red')
+            self.frame_kanan.place(x=640, y=80)
+    
+            self.frame_bawah = tk.Frame(self.root, height=80, width=1280, bg='white')
+            self.frame_bawah.place(x=0, y=640)
 
     def create_top_frame(self):
         self.ao_name_var = tk.StringVar()
@@ -236,7 +236,7 @@ def create_frames(self):
         self.kikken_ao_btn = tk.Button(self.frame_kiri, text="Kikken", font=("Arial", 12, "bold"), width=10, bg='gray', fg='white', command=lambda: self.apply_penalty("Ao", "Kikken"))
         self.kikken_ao_btn.place(x=360, y=400)
 
-def create_right_frame(self):
+    def create_right_frame(self):
         self.flag_box_aka = tk.Frame(self.frame_kanan, width=180, height=120, bg='white', bd=2, relief='ridge')
         self.flag_box_aka.place(x=230, y=20)
 
@@ -351,7 +351,7 @@ def create_right_frame(self):
         self.blue_flag = ImageTk.PhotoImage(self.blue_flag_img)
         self.flag_label_ao.config(image=self.blue_flag)
 
-self.red_flag_img = Image.open("red.png").resize((180, 100)) #bendera biru placeholder
+        self.red_flag_img = Image.open("red.png").resize((180, 100)) #bendera biru placeholder
         self.red_flag = ImageTk.PhotoImage(self.red_flag_img)
         self.flag_label_aka.config(image=self.red_flag)
 
@@ -392,7 +392,7 @@ self.red_flag_img = Image.open("red.png").resize((180, 100)) #bendera biru place
         if self.back_callback:
             self.back_callback()
 class AppTkinter:
-    def init(self, root):
+    def __init__(self, root):
         self.root = root
         self.root.title("Kelompok 3")
         self.root.geometry("1280x720")
@@ -465,7 +465,7 @@ class AppTkinter:
     def keluar_aplikasi(self):
         self.root.destroy()
 
-if name == "main":
+if __name__ == "__main__":
     root = tk.Tk()
     app = AppTkinter(root)
     root.mainloop()
